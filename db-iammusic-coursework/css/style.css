@@ -1,0 +1,273 @@
+:root {
+    --bg-black: #000000;
+    --bg-dark: #121212;
+    --bg-light: #181818;
+    --bg-hover: #282828;
+    --text-white: #ffffff;
+    --text-grey: #b3b3b3;
+    --spotify-green: #1db954;
+    --spotify-green-hover: #1ed760;
+}
+
+/* Загальні налаштування */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden; /* Фіксуємо вікно, скрол буде лише в main-content */
+}
+
+.app-container {
+    display: flex;
+    /* Висота вікна мінус висота плеєра (90px) */
+    height: calc(100vh - 90px);
+}
+
+/* Сайдбар */
+.sidebar {
+    width: 240px;
+    background-color: var(--bg-black);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--spotify-green);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav li {
+    padding: 10px 0;
+}
+
+.sidebar nav a {
+    color: var(--text-grey);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar nav a:hover {
+    color: var(--text-white);
+}
+
+/* Основний контент */
+.main-content {
+    flex: 1;
+    background: linear-gradient(to bottom, #222222, var(--bg-dark));
+    overflow-y: auto;
+    padding: 24px;
+    padding-bottom: 120px !important;
+    position: relative;
+}
+
+/* Кастомізація скролбару */
+.main-content::-webkit-scrollbar {
+    width: 12px;
+}
+.main-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-bar {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+/* Оновлений стиль пошуку (темний) */
+.search-form-container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 8px 15px;
+    width: 280px;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.search-form-container:focus-within {
+    border-color: var(--spotify-green);
+    background: rgba(255, 255, 255, 0.15);
+    width: 320px; /* Трохи розширюється при фокусі */
+}
+
+.search-form-container input {
+    background: transparent;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    outline: none;
+    width: 100%;
+    font-size: 13px;
+}
+
+/* Старий пошук (якщо використовується десь ще) */
+.search-input {
+    background-color: white;
+    border: none;
+    border-radius: 500px;
+    padding: 12px 24px;
+    color: black;
+    width: 350px;
+    outline: none;
+    font-size: 14px;
+}
+
+/* Сітка пісень */
+.song-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+/* Картка */
+.card {
+    background-color: var(--bg-light);
+    padding: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.card:hover {
+    background-color: var(--bg-hover);
+}
+
+.img-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    margin-bottom: 16px;
+    background-color: #282828;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.card:hover img {
+    filter: brightness(0.7);
+}
+
+/* Кнопка Play */
+.play-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: var(--spotify-green);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    border: none;
+}
+
+.play-btn span {
+    font-size: 22px;
+    padding-left: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card:hover .play-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.play-btn:hover {
+    background-color: var(--spotify-green-hover);
+    transform: scale(1.06);
+}
+
+/* Текстові блоки */
+.card h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-white);
+}
+
+.card p {
+    color: var(--text-grey);
+    font-size: 14px;
+    margin: 0;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Плеєр */
+.player-bar {
+    height: 90px;
+    background-color: #000000;
+    border-top: 1px solid #282828;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Авторизація в сайдбарі */
+.auth-links {
+    margin-top: auto;
+    padding-bottom: 20px;
+}
+
+.auth-links a {
+    color: var(--text-grey);
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.auth-links a:hover {
+    color: white;
+}
