@@ -3,6 +3,13 @@ require_once 'includes/db.php';
 require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
 echo '<link rel="stylesheet" href="assets/css/style.css">';
+// Налаштування лімітів відображення
+$limit_albums = 6;
+$limit_recommended_songs = 5;
+
+// Налаштування часу для привітання
+$morning_end = 12;
+$day_end = 18;
 
 $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
 
@@ -16,11 +23,11 @@ try {
         $isSearch = true;
     } else {
         $isSearch = false;
-        $stmtAlbums = $pdo->query("SELECT TOP 6 id_album, title, artist, imageURL, releaseYear FROM dbo.Album ORDER BY id_album DESC");
+        $stmtAlbums = $pdo->query("SELECT TOP $limit_albums id_album, title, artist, imageURL, releaseYear FROM dbo.Album ORDER BY id_album DESC");
         $albums = $stmtAlbums->fetchAll(PDO::FETCH_ASSOC);
 
         $stmtSongs = $pdo->query("
-            SELECT TOP 5 s.id_song, s.title, s.artist, a.imageURL, s.audioURL 
+            SELECT TOP $limit_recommended_songs s.id_song, s.title, s.artist, a.imageURL, s.audioURL 
             FROM dbo.Song s 
             JOIN dbo.Album a ON s.id_album = a.id_album 
             ORDER BY NEWID()
@@ -33,7 +40,7 @@ try {
 }
 
 $hour = date('H');
-$greeting = ($hour < 12) ? "Доброго ранку" : (($hour < 18) ? "Доброго дня" : "Добрий вечір");
+$greeting = ($hour < $morning_end) ? "Доброго ранку" : (($hour < $day_end) ? "Доброго дня" : "Добрий вечір");
 ?>
 
     <main class="main-content">
