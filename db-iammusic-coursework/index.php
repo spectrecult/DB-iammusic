@@ -54,20 +54,13 @@ $greeting = ($hour < 12) ? "Доброго ранку" : (($hour < 18) ? "Доб
             </div>
 
             <?php if ($isSearch): ?>
-                <h3 class="section-title">Результати пошуку</h3>
-                <section class="song-grid">
-                    <?php foreach ($albums as $album): ?>
-                        <div class="card" onclick="location.href='album_details.php?id=<?= $album['id_album']; ?>'">
-                            <div class="img-container">
-                                <img src="<?= $album['imageURL'] ?: 'img/default.png'; ?>" alt="Cover">
-                                <button class="play-btn"><span>▶</span></button>
-                            </div>
-                            <h4><?= htmlspecialchars($album['title']); ?></h4>
-                            <p><?= htmlspecialchars($album['artist']); ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </section>
-                <div style="margin-top: 20px;"><a href="index.php" style="color: #1db954; text-decoration: none;">← Назад</a></div>
+            <h3 class="section-title">Результати пошуку</h3>
+            <section class="song-grid">
+                <?php foreach ($albums as $album): ?>
+                    <?php include 'includes/album-card.php'; ?>
+                <?php endforeach; ?>
+            </section>
+            <?php endif; ?>
 
             <?php else: ?>
                 <div class="quick-access-grid">
@@ -84,14 +77,7 @@ $greeting = ($hour < 12) ? "Доброго ранку" : (($hour < 18) ? "Доб
                         <h3 class="section-title" style="margin-top: 0;">Популярні альбоми</h3>
                         <section class="song-grid">
                             <?php foreach ($albums as $album): ?>
-                                <div class="card" onclick="location.href='album_details.php?id=<?= $album['id_album']; ?>'">
-                                    <div class="img-container">
-                                        <img src="<?= $album['imageURL'] ?: 'img/default.png'; ?>" alt="Cover">
-                                        <button class="play-btn"><span>▶</span></button>
-                                    </div>
-                                    <h4><?= htmlspecialchars($album['title']); ?></h4>
-                                    <p><?= htmlspecialchars($album['artist']); ?></p>
-                                </div>
+                                <?php include 'includes/album-card.php'; ?>
                             <?php endforeach; ?>
                         </section>
                     </div>
