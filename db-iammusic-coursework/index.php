@@ -131,3 +131,4 @@ $greeting = ($hour < 12) ? "Доброго ранку" : (($hour < 18) ? "Доб
     </script>
 
 <?php require_once 'includes/footer.php'; ?>
+
